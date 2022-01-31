@@ -1,0 +1,17 @@
+stages:
+- stage: PackagePublish
+  displayName: 'Package & Publish'
+  jobs:
+  - job: PackagePublish
+    displayName: 'Package & Publish'
+    steps:
+      # - task: Docker@2
+      #   displayName: 'Login to Artifactory - Dockerhub remote'
+      #   inputs:
+      #     command: login
+      #     containerRegistry: sampleapi-dockerhub-remote-service
+      - task: ArtifactoryGenericDownload@3
+        inputs:
+          connection: 'divija-gpg'
+          specSource: 'taskConfiguration'
+          failNoOp: true
