@@ -15,29 +15,3 @@ stages:
           connection: 'divija-gpg'
           specSource: 'taskConfiguration'
           failNoOp: true
-      - task: Docker@2
-        inputs:
-          command: 'build'
-          Dockerfile: '**/Dockerfile'
-          arguments: '-t aemo-sampleapi-docker-build.jfrog.io/testapp:$(Build.BuildId)'
-      - task: ArtifactoryDocker@1
-        inputs:
-          command: 'push'
-          artifactoryService: 'sampleapi-pipeline-service'
-          targetRepo: 'sampleapi-docker-build'
-          imageName: 'aemo-sampleapi-docker-build.jfrog.io/testapp:$(Build.BuildId)'
-          collectBuildInfo: true
-          buildName: '$(Build.DefinitionName)'
-          buildNumber: '$(Build.BuildNumber)'
-          includeEnvVars: true
-      - task: ArtifactoryPublishBuildInfo@1
-        inputs:
-          artifactoryService: 'sampleapi-pipeline-service'
-          buildName: '$(Build.DefinitionName)'
-          buildNumber: '$(Build.BuildNumber)'
-      - task: ArtifactoryXrayScan@1
-        inputs:
-          artifactoryService: 'sampleapi-pipeline-service'
-          buildName: '$(Build.DefinitionName)'
-          buildNumber: '$(Build.BuildNumber)'
-          allowFailBuild: false
