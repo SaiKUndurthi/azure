@@ -10,7 +10,11 @@ stages:
       #   inputs:
       #     command: login
       #     containerRegistry: sampleapi-dockerhub-remote-service
-      
+      - task: ArtifactoryGenericDownload@3
+        inputs:
+          connection: 'divija-gpg'
+          specSource: 'taskConfiguration'
+          failNoOp: true
       - task: Docker@2
         inputs:
           command: 'build'
